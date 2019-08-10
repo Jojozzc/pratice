@@ -9,4 +9,16 @@ int main()
     cout << a << endl;
     // ok
     cout << "888" << endl;
+    cout << "888" << endl;
+
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+    cout << "888" << endl;
+
 }
