@@ -7,4 +7,5 @@ int main()
     cout << "23333" << endl;
     int a = 3;
     cout << a << endl;
+    // ok
 }
