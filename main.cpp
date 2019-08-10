@@ -8,4 +8,5 @@ int main()
     int a = 3;
     cout << a << endl;
     // ok
+    cout << "888" << endl;
 }
