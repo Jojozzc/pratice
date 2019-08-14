@@ -73,10 +73,10 @@ string shortestSubstrAll(string s) {
     int len = temp.length();
     map<char, int > check;
     for (int i = 0; i < len; ++i) {
-        if (check.find(s[i]) == check.end()) {
-            check[s[i]] = 1;
+        if (check.find(temp[i]) == check.end()) {
+            check[temp[i]] = 1;
         } else{
-            check[s[i]]++;
+            check[temp[i]]++;
         }
     }
     // 可以通过找s的长度为len的字串，看看是不是满足条件，找出字典序最小的
