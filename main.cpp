@@ -1,38 +1,10 @@
 #include<iostream>
 #include <string>
-#include <vector>
 #include <set>
 #include <map>
 
 using namespace std;
 
-
-int minOp(string s1, string s2) {
-    int l1 = s1.length(), l2=s2.length();
-    vector<vector<int>>dp(l1 + 1, vector<int>(l2 + 1));
-    for(int i = 0;i <= l1; i++){
-        for(int j = 0;j <= l2; j++){
-            if(i == 0){
-                dp[i][j] = j;
-            }else if(j == 0){
-                dp[i][j] = i;
-            }else if(s1[i-1] == s2[j-1]){
-                dp[i][j] = dp[i-1][j-1];
-            }else{
-                dp[i][j] = min(min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1])+1;
-            }
-        }
-    }
-    return dp[l1][l2];
-}
-
-void t2(){
-    string s1;
-    string s2;
-    while (cin >> s1 && cin >> s2) {
-        cout << minOp(s1, s2) << endl;
-    }
-}
 
 string minW(string s, string t){
     int *check = new int['z' + 1];
@@ -99,9 +71,30 @@ string shortestSubstrAll(string s) {
     // 这个temp不是字典序最小
     string temp = minW(s, minS);
     int len = temp.length();
+    map<char, int > check;
+    for (int i = 0; i < len; ++i) {
+        if (check.find(s[i]) == check.end()) {
+            check[s[i]] = 1;
+        } else{
+            check[s[i]]++;
+        }
+    }
     // 可以通过找s的长度为len的字串，看看是不是满足条件，找出字典序最小的
-    for (int i = 0; i < s.length() - len + 1; ++i) {
-
+    for (int i = len; i < s.length() - len + 1; ++i) {
+        check[s[i - 1]]--;
+        if (check[s[i - 1]] == 0) {
+            check.erase(s[i - 1]);
+        }
+        if (check.find(s[i + len - 1]) == check.end()) {
+            check[s[i + len - 1]] = 1;
+        } else {
+            check[s[i + len - 1]]++;
+        }
+        if (check.size() == len) {
+            if (s.substr(i, len) < temp) {
+                temp = s.substr(i, len);
+            }
+        }
     }
     return temp;
 }
