@@ -1,54 +1,39 @@
 #include<iostream>
 #include <string>
+#include <vector>
 
 
 using namespace std;
 
-bool judge(int cnt1[], int cnt2[]) {
-    for (int i = 0; i < 26; ++i) {
-        if (cnt1[i] != cnt2[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-bool check(string s1, string s2){
-    if (s1.length() < s2.length()) {
-        return false;
-    }
-    int cnt1[26];
-    int cnt2[26];
-    for (int i = 0; i < 26; i++){
-        cnt1[i] = 0;
-        cnt2[i] = 0;
-    }
 
-    for (int i = 0; i < s2.length(); ++i) {
-        cnt1[s1[i] - 'a']++;
-    }
-    for (int i = 0; i < s2.length(); ++i) {
-        cnt2[s2[i] - 'a']++;
-    }
-    int lenDiff = s1.length() - s2.length();
-    for (int i = 0; i < s1.length() - lenDiff; ++i) {
-        if (judge(cnt1, cnt2)) {
-            return true;
+int minOp(string s1, string s2) {
+    int l1 = s1.length(), l2=s2.length();
+    vector<vector<int>>dp(l1 + 1, vector<int>(l2 + 1));
+    for(int i = 0;i <= l1;i++){
+        for(int j = 0;j <= l2;j++){
+            if(i == 0){
+                dp[i][j] = j;   //如果 i=0 则需要插入j个字符
+            }else if(j == 0){
+                dp[i][j] = i;    //如果j=0则需要删除i个字符
+            }else if(s1[i-1] == s2[j-1]){   //如果字符相同则不做变换，等于这个字符之前的步数
+                dp[i][j] = dp[i-1][j-1];
+            }else{                          //否则 就从插入，删除，修改中选择最小的 加 1
+                dp[i][j] = min(min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1])+1;
+            }
         }
-        cnt1[s1[i] - 'a']--;
-        if (i < s1.length()) {
-            cnt1[s1[i + 1] - 'a']++;
-        }
     }
-    return false;
+    return dp[l1][l2];
 }
+
+void t2(){
+    string s1;
+    string s2;
+    while (cin >> s1 && cin >> s2) {
+        cout << minOp(s1, s2) << endl;
+    }
+}
+
 
 int main() {
-    string s1, s2;
-    cin >> s1;
-    cin >> s2;
-    if (check(s1, s2)) {
-        cout << "True" << endl;
-    } else {
-        cout << "False" << endl;
-    }
+    t2();
 }
