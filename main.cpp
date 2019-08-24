@@ -13,11 +13,9 @@ int main() {
     string str;
     cin >> str;
     int dp[1000000][2];
-//    dp[0][0] = 0;
-//    dp[0][1] = 1;
     if(str[0]<='Z'){
-        dp[0][0]=2;
-        dp[0][1]=3;
+        dp[0][0]=0;
+        dp[0][1]=1;
     }
     else {
         dp[0][0]=1;
@@ -34,7 +32,7 @@ int main() {
             dp[i][1]=min(dp[i-1][0]+4,dp[i-1][1]+2);
         }
     }
-    cout << min(dp[len - 1][0],dp[len - 1][1]+1) << endl;
+    cout << min(dp[len - 1][0],dp[len - 1][1]) << endl;
     return 0;
 
 
