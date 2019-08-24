@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-    int len,i;
+    int len;
     cin >> len;
     string str;
 
@@ -20,7 +20,7 @@ int main() {
     }
     dp[0][0] = 0;
     dp[0][1] = 0x3f3f3f;
-    for(i = 0; i < len;i++)
+    for(int i = 0; i < len;i++)
     {
         if(str[i]>='a' && str[i]<='b')
         {
