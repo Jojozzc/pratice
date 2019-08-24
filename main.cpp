@@ -1,6 +1,6 @@
 #include<iostream>
 #include <string>
-#include <set>
+#include <stack>
 #include <map>
 #include <vector>
 #include <string>
@@ -8,33 +8,39 @@
 using namespace std;
 
 int main() {
-    int len;
-    cin >> len;
-    string str;
-    cin >> str;
-    int dp[1000000][2];
-    if(str[0]<='Z'){
-        dp[0][0]=0;
-        dp[0][1]=1;
+    int n;
+    cin >> n;
+    int* nums = new int[n];
+    for(int i = 0; i < n; ++i){
+        cin >> nums[i];
     }
-    else {
-        dp[0][0]=0;
-        dp[0][1]=2;
-    }
-    for(int i = 0; i < len;i++)
-    {
-        if(str[i] >= 'a' && str[i] <= 'z')
-        {
-            dp[i+1][0]=min(dp[i][0]+1,dp[i][1]+2);
-            dp[i+1][1]=min(dp[i][0]+2,dp[i][1]+2);
+    stack<int*> st;
+    int init[2] = {0, 0};
+    st.push(init);
+    int lastMax = 0;
+
+    int maxNum = nums[0];
+    int minNum = nums[0];
+
+    for(int i = 1; i < n; ++i){
+        while (nums[i] < lastMax){
+            int* tmp = st.top();
+            st.pop();
+            maxNum = max(maxNum, tmp[1]);
+            minNum = max(minNum, tmp[0]);
+            minNum = min(nums[i], minNum);
+            lastMax = st.top()[1];
         }
-        else
-        {
-            dp[i+1][0]=min(dp[i][0]+2,dp[i][1]+2);
-            dp[i+1][1]=min(dp[i][0]+2,dp[i][1]+1);
+        minNum = min(nums[i], minNum);
+        if(nums[i] >= maxNum){
+            int tArr[] = {minNum, maxNum};
+            st.push(tArr);
+            lastMax = maxNum;
+            maxNum = nums[i];
+            minNum = nums[i];
         }
     }
-    cout << min(dp[len][0],dp[len][1]) << endl;
+    cout << st.size() << endl;
     return 0;
 
 
