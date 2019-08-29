@@ -15,7 +15,7 @@ int lengthOfLongest(vector<int>& nums) {
     for (int i = 1; i < len; i++) {
         int maxVal = 0;
         for (int j = 0; j < i; j++) {
-            if (nums[i] > nums[j]) {
+            if (nums[i] >= nums[j]) {
                 maxVal = max(maxVal, dp[j]);
             }
         }
