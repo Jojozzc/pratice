@@ -1,40 +1,66 @@
 #include<iostream>
 #include <vector>
+#include <stack>
 #include <algorithm>
 using namespace std;
 
 
-int lengthOfLongest(vector<int>& nums) {
-    if (nums.size() == 0) {
-        return 0;
-    }
-    int len = nums.size();
-    int* dp = new int[nums.size()];
-    dp[0] = 1;
-    int maxLen = 1;
-    for (int i = 1; i < len; i++) {
-        int maxVal = 0;
-        for (int j = 0; j < i; j++) {
-            if (nums[i] >= nums[j]) {
-                maxVal = max(maxVal, dp[j]);
+void xhs1(){
+    string str;
+    cin >> str;
+    int len = str.length();
+
+    stack<char> judgeStack;
+    for (int i = 0; i < len; ++i) {
+        if (str[i] == '(') {
+            judgeStack.push(str[i]);
+        } else if (str[i] == ')') {
+            judgeStack.pop();
+        } else if (str[i] == '<') {
+            if (judgeStack.empty()) {
+                continue;
+            } else if (judgeStack.top() == '('){
+                continue;
+            } else {
+                judgeStack.pop();
             }
+        } else {
+            if ((!judgeStack.empty()) && (judgeStack.top() == '(')) {
+                continue;
+            }
+            judgeStack.push(str[i]);
         }
-        dp[i] = maxVal + 1;
-        maxLen = max(maxLen, dp[i]);
     }
-    return maxLen;
+    string res = "";
+    while (!judgeStack.empty()) {
+        res = judgeStack.top() + res;
+        judgeStack.pop();
+    }
+    cout << res;
+}
+
+
+void xhs2(){
+    int N = 0;
+    cin >> N;
+    vector<int*> goods;
+    int* dp = new int[N];
+    for (int i = 0; i < N; ++i) {
+        int *p = new int[2];
+        cin >> p[0];
+        cin >> p[1];
+        goods.push_back(p);
+    }
+    for (int i = 0; i < N; ++i) {
+
+    }
 }
 
 int main() {
-    int n = 0;
-    cin >> n;
-    vector<int> nums;
-    for (int i = 0; i < n; ++i) {
-        int temp;
-        cin >> temp;
-        nums.push_back(temp);
-    }
-    cout << lengthOfLongest(nums);
+    xhs1();
+
+
+
     return 0;
 
 }
