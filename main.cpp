@@ -16,6 +16,12 @@ bool judge(int num) {
 int main() {
     int n;
     cin >> n;
+    if (n <= 99) {
+        n = 100;
+    }
+    if (n >= 1000) {
+        n = 999;
+    }
     int big = n;
     int small = n;
     bool bigFind = false;
