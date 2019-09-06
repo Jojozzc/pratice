@@ -1,55 +1,67 @@
 #include<iostream>
 #include <vector>
-#include <stack>
 #include <algorithm>
-#include <stdio.h>
 using namespace std;
 
 
-bool judge(int num) {
-    int h = num / 100;
-    int d = num / 10 % 10;
-    int u = num % 10;
-    return num == (h * h * h + d * d * d + u * u * u);
-}
-
 int main() {
-    int n;
+    int n = 0;
+    int result = 0;
     cin >> n;
-    if (n <= 99) {
-        n = 100;
+    if (n <= 1) {
+        cout << 1;
+        return 0;
     }
-    if (n >= 1000) {
-        n = 999;
+    int* nums = new int[n];
+
+    for (int i = 0; i < n; ++i) {
+        cin >> nums[i];
     }
-    int big = n;
-    int small = n;
-    bool bigFind = false;
-    bool smallFind = false;
-    int bigRes = 999999;
-    int smallRes = 99999;
-    while (big < 1000 || small > 99) {
-        if (!bigFind && big < 1000) {
-            if (judge(big)) {
-                bigFind = true;
-                bigRes = big;
-            }
-            big++;
-        } else{
-            big = 1000;
+
+
+    int start = 0;
+
+    int single = 1;
+    while (start < n) {
+        while (start < n && nums[start] == 1) {
+            start++;
         }
-        if (!smallFind && small > 99) {
-            if (judge(small)) {
-                smallFind = true;
-                smallRes = small;
-            }
-            small--;
-        } else{
-            small = 0;
-        }
-        if (smallFind && bigFind) {
+        if (start == n) {
             break;
         }
+        int p = start;
+        while (p < n && nums[p] == 0) {
+            p++;
+        }
+        // p是1或者边界的位置
+        int zeroCount = p - start;
+        if (start > 0 && p < n) {
+            // 前后都是1
+            if (zeroCount <= 2) {
+                single = 0;
+            } else if (zeroCount % 2 == 1) {
+                // 奇数个数的0只能有一种改法
+                single = zeroCount / 2;
+            } else {
+                // 个数是偶数
+                single = (zeroCount - 1) / 2;
+            }
+        } else if (start == 0 && p == n){
+            // 前后都没东西
+            if (zeroCount % 1 == 1) {
+                single = (zeroCount + 1) / 2;
+            } else {
+                single = zeroCount / 2;
+            }
+        } else {
+            // 前后只有一个地方是1
+            single = zeroCount / 2;
+        }
+
+        start = p;
+        result += single;
     }
-    cout << ((abs(n - smallRes) > bigRes - n) ? bigRes : smallRes) << endl;
+    cout << result << endl;
+    return 0;
+
 }
