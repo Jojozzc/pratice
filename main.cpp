@@ -21,7 +21,7 @@ int main() {
     bool bigFind = false;
     bool smallFind = false;
     int bigRes = 999999;
-    int smallRes = 0;
+    int smallRes = 99999;
     while (big < 1000 || small > 99) {
         if (!bigFind && big < 1000) {
             if (judge(big)) {
@@ -33,13 +33,16 @@ int main() {
             big = 1000;
         }
         if (!smallFind && small > 99) {
-            if (judge(big)) {
+            if (judge(small)) {
                 smallFind = true;
                 smallRes = small;
             }
             small--;
         } else{
             small = 0;
+        }
+        if (smallFind && bigFind) {
+            break;
         }
     }
     cout << ((abs(n - smallRes) > bigRes - n) ? bigRes : smallRes) << endl;
