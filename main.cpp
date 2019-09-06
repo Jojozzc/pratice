@@ -2,65 +2,45 @@
 #include <vector>
 #include <stack>
 #include <algorithm>
+#include <stdio.h>
 using namespace std;
 
 
-void xhs1(){
-    string str;
-    cin >> str;
-    int len = str.length();
-
-    stack<char> judgeStack;
-    for (int i = 0; i < len; ++i) {
-        if (str[i] == '(') {
-            judgeStack.push(str[i]);
-        } else if (str[i] == ')') {
-            judgeStack.pop();
-        } else if (str[i] == '<') {
-            if (judgeStack.empty()) {
-                continue;
-            } else if (judgeStack.top() == '('){
-                continue;
-            } else {
-                judgeStack.pop();
-            }
-        } else {
-            if ((!judgeStack.empty()) && (judgeStack.top() == '(')) {
-                continue;
-            }
-            judgeStack.push(str[i]);
-        }
-    }
-    string res = "";
-    while (!judgeStack.empty()) {
-        res = judgeStack.top() + res;
-        judgeStack.pop();
-    }
-    cout << res;
-}
-
-
-void xhs2(){
-    int N = 0;
-    cin >> N;
-    vector<int*> goods;
-    int* dp = new int[N];
-    for (int i = 0; i < N; ++i) {
-        int *p = new int[2];
-        cin >> p[0];
-        cin >> p[1];
-        goods.push_back(p);
-    }
-    for (int i = 0; i < N; ++i) {
-
-    }
+bool judge(int num) {
+    int h = num / 100;
+    int d = num / 10 % 10;
+    int u = num % 10;
+    return num == (h * h * h + d * d * d + u * u * u);
 }
 
 int main() {
-    xhs1();
-
-
-
-    return 0;
-
+    int n;
+    cin >> n;
+    int big = n;
+    int small = n;
+    bool bigFind = false;
+    bool smallFind = false;
+    int bigRes = 999999;
+    int smallRes = 0;
+    while (big < 1000 || small > 99) {
+        if (!bigFind && big < 1000) {
+            if (judge(big)) {
+                bigFind = true;
+                bigRes = big;
+            }
+            big++;
+        } else{
+            big = 1000;
+        }
+        if (!smallFind && small > 99) {
+            if (judge(big)) {
+                smallFind = true;
+                smallRes = small;
+            }
+            small--;
+        } else{
+            small = 0;
+        }
+    }
+    cout << ((abs(n - smallRes) > bigRes - n) ? bigRes : smallRes) << endl;
 }
