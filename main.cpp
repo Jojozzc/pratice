@@ -26,7 +26,7 @@ int main() {
     if (dp[len - 1] >= len) {
         cout << -1 << endl;
     } else {
-        cout << dp[len - 1];
+        cout << dp[len - 1] << endl;
     }
     return 0;
 }
