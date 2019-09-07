@@ -58,7 +58,7 @@ private static void dfsCal(String id) {
                 }
             }
         }
-        int res = cal(op);
+        int res = cal(real.toString());
         metricMap.put(id, res);
     }
 
