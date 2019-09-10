@@ -17,6 +17,8 @@ string intToRoman(int num) {
 }
 
 int main(){
-    cout << intToRoman(15);
+    int n;
+    cin >> n;
+    cout << intToRoman(n) << endl;
     return 0;
 }
