@@ -1,57 +1,31 @@
-#include <iostream>
-#include <vector>
-#include <set>
-using namespace std;
+import java.util.Scanner;
 
-int maxResult = -9000000;
-
-void dfs(vector<int>& a, vector<int>& b, set<int>& mark,  int m, int *curSum){
-    if (m == 0) {
-        maxResult = max(maxResult, *curSum);
-        return;
-    }
-
-    for (int i = 0; i < a.size(); ++i) {
-        if (mark.find(i) == mark.end()) {
-            a[i] -= b[i];
+public class Main {
+public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String arrStr = in.nextLine();
+        arrStr = arrStr.substring(1, arrStr.length() - 1);
+        String[] numsStr = arrStr.split(",");
+        if (numsStr.length == 0) {
+            System.out.println(0);
+            return;
         }
-    }
-    for (int i = 0; i < a.size(); ++i) {
-        if (mark.find(i) != mark.end()) {
-            continue;
+        int[] nums = new int[numsStr.length];
+        int res = nums[0];
+        int curSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            numsStr[i] = numsStr[i].trim();
+            nums[i] = Integer.parseInt(numsStr[i]);
         }
-        mark.insert(i);
-        *curSum += (a[i] + b[i]);
-        dfs(a, b, mark, m - 1, curSum);
-        mark.erase(i);
-    }
-    for (int i = 0; i < a.size(); ++i) {
-        if (mark.find(i) == mark.end()) {
-            a[i] += b[i];
+        for (int i = 0; i < nums.length; i++) {
+            if (curSum > 0) {
+                curSum += nums[i];
+            } else {
+                curSum = nums[i];
+            }
+            res = Math.max(res, curSum);
         }
-    }
+        System.out.println(res);
 
-}
-
-int main(){
-    int n = 0, m = 0;
-    cin >> n >> m;
-    vector<int> a;
-    vector<int> b;
-    for (int i = 0; i < n; ++i) {
-        int temp;
-        cin >> temp;
-        a.push_back(temp);
     }
-    for (int i = 0; i < n; ++i) {
-        int temp;
-        cin >> temp;
-        b.push_back(temp);
-    }
-    set<int> mark;
-    int* curSum = new int[1];
-    curSum[0] = 0;
-    dfs(a, b, mark, m, curSum);
-    cout << maxResult << endl;
-    return 0;
 }
