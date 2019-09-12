@@ -1,6 +1,5 @@
 
 
-
 import java.util.*;
 
 public class Main {
@@ -12,10 +11,14 @@ public static void main(String[] args) {
 
 
     }
-private static void count(String s){
-        String[] words = s.split(",");
+private static void count(String ss){
+
+        String[] words = ss.split(",");
         Map<String, Integer> countMap = new HashMap<>();
         for (String str : words) {
+            if (str.isEmpty()) {
+                continue;
+            }
             char ch = str.charAt(str.length() - 1);
             if (ch == 'd' || ch == 'e')
                 countMap.put(str, countMap.getOrDefault(str, 0) + 1);
