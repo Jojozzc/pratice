@@ -1,24 +1,20 @@
-#include <string>
-#include <iostream>
 
-using namespace std;
-string intToRoman(int num) {
-    string ones[] = { "","I", "II", "III","IV","V","VI","VII","VIII","IX" };
-    string tens[] = { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
-    string hunds[] = { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
-    string thous[] = { "", "M", "MM", "MMM" };
 
-    string ans = "";
-    ans += thous[num / 1000];
-    ans += hunds[num / 100 % 10];
-    ans += tens[num / 10 % 10];
-    ans += ones[num % 10];
-    return ans;
-}
+import java.util.*;
 
-int main(){
-    int n;
-    cin >> n;
-    cout << intToRoman(n) << endl;
-    return 0;
+public class Main {
+public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String str = in.next();
+        String[] words = str.split(",");
+        Map<String, Integer> countMap = new HashMap<>();
+        for (String s : words) {
+            char ch = s.charAt(s.length() - 1);
+            if (ch == 'd' || ch == 'e')
+                countMap.put(s, countMap.getOrDefault(s, 0) + 1);
+        }
+
+
+        System.out.println(countMap);
+    }
 }
