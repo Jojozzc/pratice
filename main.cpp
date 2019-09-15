@@ -1,49 +1,41 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int n = 0;
+    cin >> n;
+    int cityNum = n + 1;
+    int* a = new int[n + 2];
+    int* b = new int[n + 2];
+    long total = 0L;
+    int* left = new int[n + 2]; // 第i个城市还差几个怪没杀
 
 
-import java.util.*;
-
-public class Main {
-public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String str = in.next();
-        statisticSubStr(str);
-
-
-
+    for (int i = 1; i <= cityNum; ++i) {
+        cin >> a[i];
     }
-private static void statisticSubStr(String s){
-        if (s == null || s.isEmpty()) {
-            return;
-        }
-        int left = 0;
-        int[] count = new int[26];
-        PriorityQueue<int[]> heap = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o2[1] - o1[1];
-            }
-        });
-        while (left < s.length()) {
-            int right = left;
-            while (right < s.length() && (s.charAt(right) == s.charAt(left))) {
-                right++;
-            }
-            if (right - left > 1) {
-                count[s.charAt(left) - 'a'] += (right - left);
-            }
-            left = right;
-        }
-        for (int i = 0; i < 26; i++) {
-            if (count[i] > 0) {
-                heap.add(new int[]{i, count[i]});
-            }
-        }
-        while (!heap.isEmpty()) {
-            int[] pair = heap.poll();
-            StringBuilder str = new StringBuilder();
-            str.append((char)(pair[0] + 'a')).append(":").append(pair[1]);
-            System.out.println(str.toString());
-        }
-
+    for (int i = 1; i <= n; ++i) {
+        cin >> b[i];
     }
+    left[0] = 0;
+    left[1] = a[1];
+    for (int i = 1; i <= n; ++i) {
+        int killNum = b[i];
+        if (left[i] >= killNum) {
+            left[i] -= killNum;
+            killNum = 0;
+        } else {
+            killNum = killNum - left[i];
+            left[i] = 0;
+        }
+        if (killNum > 0) {
+            left[i + 1] = max(0, a[i + 1] - killNum);
+            killNum = max(0, killNum - a[i + 1]);
+        }
+        total += (b[i] - killNum);
+    }
+    total += (a[n + 1] - left[n + 1]);
+    cout << total << endl;
+    return 0;
 }
