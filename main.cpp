@@ -27,8 +27,11 @@ void dfs(int n, bool* mark, vector<int>& nums, vector<string>& result){
 int main(){
     int n = 0;
     cin >> n;
+    if (n < 1){
+        return 0;
+    }
     vector<string> result;
-    bool* mark = new bool[n + 1]; // mark[i]表示i已经在组合里了
+    bool* mark = new bool[n + 1]; // mark[i]=true表示i已经在组合里了
     for (int i = 1; i <= n; ++i) {
         mark[i] = false;
     }
