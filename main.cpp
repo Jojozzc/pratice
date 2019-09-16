@@ -1,33 +1,35 @@
 #include <iostream>
-#include <vector>
+#include <string>
 using namespace std;
 
-
-int numDecodings(string s) {
-    int cur = 1;
-    int pre = 1;
-    for(int i = 1; i < s.length(); i++){
-        int num = (s[i - 1] - '0') * 10 + (s[i] - '0');
-        int temp = cur;
-        if(s[i] == '0'){
-            if(num > 26 || num == 0) return 0;
-            cur = pre;
-        }
-        else{
-            if(s[i - 1] == '0') cur = pre;
-            else {
-                if(num <= 26) cur += pre;
+string move(string s, int k){
+    for (int i = 0; i < k; ++i) {
+        if (i < s.length() - 1) {
+            if (s[i] > s[i + 1]) {
+                char ch = s[i];
+                s.erase(i, 1);
+                s = s + ch;
+                return s;
             }
         }
-
-        pre = temp;
     }
-    return cur;
+    return s;
 }
 
 int main(){
     string s;
+    int k = 0;
+
     cin >> s;
-    cout << numDecodings(s) << endl;
-    return 0;
+    cin >> k;
+    string res = s;
+    k = k < s.length()? k : s.length();
+    for (int i = 0; i < s.length() * 2; ++i) {
+        s = move(s, k);
+        if (s < res) {
+            res = s;
+        }
+    }
+    cout << res << endl;
+
 }
