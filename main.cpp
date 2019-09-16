@@ -2,25 +2,23 @@
 #include <vector>
 #include <string>
 using namespace std;
+TreeNode* createTree();
+class TreeNode{
+    int val;
+public:
+    TreeNode* left;
+    TreeNode* right;
+};
 
-
-
-
-string hosts[] = {"host0", "host1", "host2", "host3", "host4"};
-int HOST_NUM = 5;
-
-int hashCode(int id) {
-    // 计算id的hash值示意
-    return id;
+int deepOrder(TreeNode* root){
+    if (root == nullptr) {
+        return 0;
+    }
+    return max(deepOrder(root->left), deepOrder(root->right)) + 1;
 }
 
-string dispatch(int requestId) {
-    return hosts[hashCode(requestId) % HOST_NUM];
-}
 
 int main(){
-    // 哈希策略负载均衡
-    int requestId = 0;
-    cin >> requestId;
-    cout << "分发到主机:" << dispatch(requestId) << endl;
+    TreeNode* root = createTree();
+    cout << deepOrder(root) << endl;
 }
