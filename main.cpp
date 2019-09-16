@@ -3,41 +3,24 @@
 #include <string>
 using namespace std;
 
-void dfs(int n, bool* mark, vector<int>& nums, vector<string>& result){
-    if (nums.size() == n) {
-        string str;
-        for (int i = 0; i < n; ++i) {
-            str += to_string(nums[i]);
-        }
-        result.push_back(str);
-        return;
-    }
-    for (int i = 1; i <=n ; ++i) {
-        if (mark[i]) {
-            continue;
-        }
-        mark[i] = true;
-        nums.push_back(i);
-        dfs(n, mark, nums, result);
-        nums.pop_back();
-        mark[i] = false;
-    }
+
+
+
+string hosts[] = {"host0", "host1", "host2", "host3", "host4"};
+int HOST_NUM = 5;
+
+int hashCode(int id) {
+    // 计算id的hash值示意
+    return id;
+}
+
+string dispatch(int requestId) {
+    return hosts[hashCode(requestId) % HOST_NUM];
 }
 
 int main(){
-    int n = 0;
-    cin >> n;
-    if (n < 1){
-        return 0;
-    }
-    vector<string> result;
-    bool* mark = new bool[n + 1]; // mark[i]=true表示i已经在组合里了
-    for (int i = 1; i <= n; ++i) {
-        mark[i] = false;
-    }
-    vector<int> nums;
-    dfs(n, mark, nums, result);
-    for (int i = 0; i < result.size(); ++i) {
-        cout << result[i] << endl;
-    }
+    // 哈希策略负载均衡
+    int requestId = 0;
+    cin >> requestId;
+    cout << "分发到主机:" << dispatch(requestId) << endl;
 }
