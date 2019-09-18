@@ -51,8 +51,16 @@ public static void preOrder(TreeNode node, StringBuilder preStr){
 
 public static void levelOrder2PreOrder(){
         Scanner in = new Scanner(System.in);
-        String levelStr = in.nextLine();
-        TreeNode root = deserialize(levelStr);
+        int num = in.nextInt();
+        StringBuilder levelStr = new StringBuilder();
+        while (num > 0) {
+            if (levelStr.length() > 0) {
+                levelStr.append(",");
+            }
+            levelStr.append(in.next());
+        }
+
+        TreeNode root = deserialize(levelStr.toString());
         StringBuilder str = new StringBuilder();
         preOrder(root, str);
         System.out.println(str.toString());
