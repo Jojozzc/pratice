@@ -54,6 +54,7 @@ public static void levelOrder2PreOrder(){
         int num = in.nextInt();
         StringBuilder levelStr = new StringBuilder();
         while (num > 0) {
+            num--;
             if (levelStr.length() > 0) {
                 levelStr.append(",");
             }
