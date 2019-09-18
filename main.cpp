@@ -1,40 +1,64 @@
-#include <iostream>
-#include <string>
-using namespace std;
+import java.util.*;
 
-bool validIpv4(string IP) {
-    int cnt = 0;
-    function <bool(char)> isNumber = [] (char c) {return isdigit(c);};
-    for(auto it = IP.begin(); it != IP.end(); ) {
-        if(isNumber(*it)) {
-            auto it2 = find_if_not(it, IP.end(), isNumber);
-            if(it2 != IP.end() && (*it2) != '.') {//divider must be '.' or ending flag
-                return false;
-            }
-            string sub = string(it, it2);
-            if((sub.size() > 1 && sub[0] == '0') || sub.size() > 3 || stoi(sub) > 255) {// no leading zero, digits <= 3, num <= 255
-                return false;
-            }
-            cnt++;
-            if(cnt == 4 && it2 != IP.end()) {//no more than 4 segments
-                return false;
-            }
-            it = it2;
+public class Main {
+    static class  TreeNode{
+        TreeNode(int val){
+            this.val = val;
         }
-        else {
-            if(*it != '.') {// only '.' can be divider
-                return false;
-            }
-            it++;
-            if(it != IP.end() && (*it) == '.') {// no consecutive '.' permitted.
-                return false;
-            }
-        }
+        int val;
+        TreeNode left;
+        TreeNode right;
     }
-    return cnt == 4;
-}
-int main() {
-    string str;
-    cin >> str;
-    cout << validIpv4(str) << endl;
+
+
+public static TreeNode deserialize(String data) {
+        if(data == null || data.length() <= 1) return null;
+        if(data.charAt(0) == '#') return null;
+        int[] p = {0};
+        return helper(new StringBuilder(data), p);
+    }
+public static TreeNode helper(StringBuilder data, int[] p){
+        if(p[0] >= data.length()) return null;
+        if(data.charAt(p[0]) == '#') {
+            p[0] += 2;
+            return null;
+        }
+        int end = p[0];
+        while(data.charAt(end) != ',') end++;
+        int val = Integer.valueOf(data.substring(p[0], end));
+        TreeNode node = new TreeNode(val);
+        p[0] = end + 1;
+        node.left = helper(data, p);
+        node.right = helper(data, p);
+        return node;
+    }
+
+
+public static void preOrder(TreeNode node, StringBuilder preStr){
+        if (preStr.length() > 0) {
+            preStr.append(",");
+        }
+        if (node == null) {
+            preStr.append("#");
+        } else {
+            preStr.append(node.val);
+            preOrder(node.left, preStr);
+            preOrder(node.right, preStr);
+        }
+
+    }
+
+
+public static void levelOrder2PreOrder(){
+        Scanner in = new Scanner(System.in);
+        String levelStr = in.nextLine();
+        TreeNode root = deserialize(levelStr);
+        StringBuilder str = new StringBuilder();
+        preOrder(root, str);
+        System.out.println(str.toString());
+    }
+
+public static void main(String[] args) {
+        levelOrder2PreOrder();
+    }
 }
