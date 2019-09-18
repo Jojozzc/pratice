@@ -12,25 +12,47 @@ public class Main {
 
 
 public static TreeNode deserialize(String data) {
-        if(data == null || data.length() <= 1) return null;
-        if(data.charAt(0) == '#') return null;
-        int[] p = {0};
-        return helper(new StringBuilder(data), p);
-    }
-public static TreeNode helper(StringBuilder data, int[] p){
-        if(p[0] >= data.length()) return null;
-        if(data.charAt(p[0]) == '#') {
-            p[0] += 2;
+
+        if(data.equals("#"))
             return null;
+
+        String[] arr = data.split(",");
+
+        int i = 0;
+        TreeNode root = new TreeNode(Integer.parseInt(arr[i++].trim()));
+
+        Queue<TreeNode> q = new LinkedList<>();
+
+        q.add(root);
+
+        while(!q.isEmpty())
+        {
+            int s = q.size();
+
+            for(int j=0;j<s;j++)
+            {
+                TreeNode temp = q.poll();
+
+                String s2 = arr[i++].trim();
+                String s3 = arr[i++].trim();
+
+                if(!s2.equals("#"))
+                {
+                    temp.left = new TreeNode(Integer.parseInt(s2));
+                    q.add(temp.left);
+                }
+
+
+                if(!s3.equals("#"))
+                {
+                    temp.right = new TreeNode(Integer.parseInt(s3));
+                    q.add(temp.right);
+                }
+            }
         }
-        int end = p[0];
-        while(data.charAt(end) != ',') end++;
-        int val = Integer.valueOf(data.substring(p[0], end));
-        TreeNode node = new TreeNode(val);
-        p[0] = end + 1;
-        node.left = helper(data, p);
-        node.right = helper(data, p);
-        return node;
+
+        return root;
+
     }
 
 
@@ -47,7 +69,7 @@ public static void preOrder(TreeNode node, StringBuilder preStr){
         }
 
     }
-
+//0,1,2,3,#,#,4,#,5,6,#
 
 public static void levelOrder2PreOrder(){
         Scanner in = new Scanner(System.in);
