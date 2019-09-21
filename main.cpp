@@ -11,7 +11,6 @@ bool canDiv2(vector<int>& nums, long sum) {
     int len = nums.size();
     int j = 0;
     for (int i = 0; i < len; ++i) {
-        j = i;
         while (true) {
             if (j > len && j % len == i) {
                 break;
