@@ -23,6 +23,7 @@ bool canDiv2(vector<int>& nums, long sum) {
                 curSum -= nums[j % len];
                 break;
             }
+            j++;
         }
     }
     return false;
