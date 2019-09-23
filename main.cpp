@@ -13,11 +13,20 @@ int main(){
     while (p < len) {
         if (str[p] == str[pre]) {
             if (p == len - 1) {
+                if (outStr.length() > 0) {
+                    outStr = outStr + " ";
+                }
                 outStr = outStr + str[p] + to_string(p - pre + 1);
             }
         } else {
+            if (outStr.length() > 0) {
+                outStr = outStr + " ";
+            }
             outStr = outStr + str[pre] + to_string(p - pre);
             if (p == len - 1) {
+                if (outStr.length() > 0) {
+                    outStr = outStr + " ";
+                }
                 outStr = outStr + str[p] + "1";
             }
             pre = p;
